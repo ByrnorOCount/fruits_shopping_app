@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Nature Dark Theme Colors - Refined -->
+    <color name="woody_brown_bg">#805c23</color>   <!-- Content Zone Background -->
+    <color name="leaf_green_top">#718d2a</color>   <!-- Top Bar / Status Bar -->
+    <color name="bold_yellow_card">#AAc58f11</color> <!-- Cards (Distinct from Green/Brown) -->
+    <color name="dark_green_deco">#AA3d8023</color>   <!-- Border/other deco -->
+
+    <!-- Bright Text Colors -->
+    <color name="bright_text_primary">#FFFFFF</color>
+    <color name="moss_green_text">#81c583</color>
+    <color name="bark_brown_secondary">#bfada6</color>
+</resources>

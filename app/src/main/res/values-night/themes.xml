@@ -1,0 +1,11 @@
+<resources>
+    <!-- Keep consistent with main theme as we are designing with dark mode assumption -->
+    <style name="Base.Theme.Fruits_App" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/woody_brown_bg</item>
+        <item name="android:statusBarColor">@color/leaf_green_top</item>
+        <item name="colorPrimary">@color/leaf_green_top</item>
+        <item name="colorSecondary">@color/bold_yellow_card</item>
+        <item name="android:textColorPrimary">@color/bright_text_primary</item>
+        <item name="android:textColorSecondary">@color/bark_brown_secondary</item>
+    </style>
+</resources>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fruitDetailLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background Image with dimming overlay -->
+    <ImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:background="@color/black"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_main" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/leaf_green_top"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:navigationIconTint="@color/white"
+        app:titleTextColor="@color/bright_text_primary" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Fruit Image Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/bold_yellow_card"
+                app:strokeColor="@color/leaf_green_top"
+                app:strokeWidth="2dp">
+
+                <ImageView
+                    android:id="@+id/fruitDetailImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="24dp"
+                    android:scaleType="centerInside"
+                    android:contentDescription="@string/grid_image_desc" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Fruit Info Section -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="#AAFFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/leaf_green_top"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:id="@+id/fruitDetailName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fruitScientificName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:fontStyle="italic"
+                        android:textColor="@color/leaf_green_top"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="16dp"
+                        android:background="@color/leaf_green_top"
+                        android:alpha="0.3" />
+
+                    <TextView
+                        android:id="@+id/fruitDetailDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/healthBenefitsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/health_benefits"
+                        android:textColor="@color/leaf_green_top"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fruitHealthBenefits"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/btnBuyNow"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="#802D5A27"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="30dp"
+                app:strokeColor="@color/leaf_green_top"
+                app:strokeWidth="2dp" />
+
+            <LinearLayout
+                android:id="@+id/adminControls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnEditFruit"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/bold_yellow_card"
+                    android:text="@string/edit_fruit_button"
+                    android:textColor="@color/black"
+                    app:cornerRadius="30dp"
+                    app:icon="@drawable/ic_edit"
+                    app:iconTint="@color/black"
+                    app:strokeColor="@color/leaf_green_top"
+                    app:strokeWidth="2dp" />
+
+                <Button
+                    android:id="@+id/btnDeleteFruit"
+                    style="@style/Widget.MaterialComponents.Button.Icon"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#80D32F2F"
+                    android:text="@string/delete_fruit_button"
+                    android:textColor="@color/white"
+                    app:cornerRadius="30dp"
+                    app:icon="@drawable/ic_delete"
+                    app:iconTint="@color/white"
+                    app:strokeColor="#B71C1C"
+                    app:strokeWidth="2dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

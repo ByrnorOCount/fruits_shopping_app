@@ -1,0 +1,31 @@
+<resources>
+    <!-- Base Nature Dark Theme -->
+    <style name="Base.Theme.Fruits_App" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/woody_brown_bg</item>
+        <item name="android:statusBarColor">@color/leaf_green_top</item>
+
+        <!-- Main UI Colors -->
+        <item name="colorPrimary">@color/leaf_green_top</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/bold_yellow_card</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Surface and Text -->
+        <item name="colorSurface">@color/woody_brown_bg</item>
+        <item name="colorOnSurface">@color/bright_text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/bark_brown_secondary</item>
+        <item name="android:textColorPrimary">@color/bright_text_primary</item>
+        <item name="android:textColorSecondary">@color/bark_brown_secondary</item>
+
+        <!-- Material Components styling -->
+        <item name="colorSecondaryContainer">@color/bold_yellow_card</item>
+        <item name="colorOnSecondaryContainer">@color/white</item>
+    </style>
+
+    <style name="Theme.Fruits_App" parent="Base.Theme.Fruits_App" />
+
+    <!-- Theme for Login/Signup (No Toolbar, Status bar matches Background) -->
+    <style name="Theme.Fruits_App.NoToolbar" parent="Theme.Fruits_App">
+        <item name="android:statusBarColor">@color/woody_brown_bg</item>
+    </style>
+</resources>

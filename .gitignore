@@ -1,0 +1,23 @@
+# IDE and System files
+.idea/
+*.iml
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Gradle and Build
+.gradle/
+build/
+app/build/
+local.properties
+
+# Secrets and Keys (Important!)
+*.jks
+*.keystore
+secrets.properties
+app/google-services.json
+
+# Temporary/Personal utility files
+tree.bat
+tree.txt
