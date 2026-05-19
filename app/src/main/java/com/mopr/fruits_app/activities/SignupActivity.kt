@@ -7,17 +7,20 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.database.DatabaseHelper
+import androidx.core.content.edit
+import androidx.lifecycle.lifecycleScope
+import com.mopr.fruits_app.database.FirestoreManager
 import com.mopr.fruits_app.models.User
+import kotlinx.coroutines.launch
 
 class SignupActivity : BaseActivity() {
-    private lateinit var db: DatabaseHelper
+    private lateinit var firestoreManager: FirestoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        db = DatabaseHelper(this)
+        firestoreManager = FirestoreManager()
 
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val tvLoginLink = findViewById<TextView>(R.id.tvLoginLink)
@@ -32,14 +35,20 @@ class SignupActivity : BaseActivity() {
 
             if (username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
                 val user = User(username = username, email = email, password = password)
-                val id = db.addUser(user)
-                if (id > 0) {
-                    Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show()
+                lifecycleScope.launch {
+                    val success = firestoreManager.registerUser(user)
+                    if (success) {
+                        // Set admin status in SharedPreferences
+                        val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                        sharedPref.edit { putBoolean("IS_ADMIN", user.isAdmin) }
+
+                        Toast.makeText(this@SignupActivity, "Registration Successful", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@SignupActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this@SignupActivity, "Registration Failed", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()

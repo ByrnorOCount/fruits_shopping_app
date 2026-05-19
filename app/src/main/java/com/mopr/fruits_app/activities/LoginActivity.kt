@@ -7,17 +7,26 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.database.DatabaseHelper
 import androidx.core.content.edit
+import androidx.lifecycle.lifecycleScope
+import com.mopr.fruits_app.database.FirestoreManager
+import com.mopr.fruits_app.database.SeedData
+import kotlinx.coroutines.launch
 
 class LoginActivity : BaseActivity() {
-    private lateinit var db: DatabaseHelper
+    private lateinit var firestoreManager: FirestoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        db = DatabaseHelper(this)
+        firestoreManager = FirestoreManager()
+
+        // One-time upload of SeedData to Firebase
+        lifecycleScope.launch {
+            firestoreManager.seedUsers(SeedData.users)
+            firestoreManager.seedFruits(SeedData.fruits)
+        }
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvSignupLink = findViewById<TextView>(R.id.tvSignupLink)
@@ -25,20 +34,22 @@ class LoginActivity : BaseActivity() {
         val editPassword = findViewById<EditText>(R.id.editPassword)
 
         btnLogin.setOnClickListener {
-            val username = editUsername.text.toString()
+            val identifier = editUsername.text.toString()
             val password = editPassword.text.toString()
 
-            val user = db.getUser(username, password)
-            if (user != null) {
-                // Store admin status in SharedPreferences for easy access
-                val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                sharedPref.edit { putBoolean("IS_ADMIN", user.isAdmin) }
+            lifecycleScope.launch {
+                val user = firestoreManager.loginUser(identifier, password)
+                if (user != null) {
+                    // Store admin status in SharedPreferences for easy access
+                    val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                    sharedPref.edit { putBoolean("IS_ADMIN", user.isAdmin) }
 
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this@LoginActivity, "Invalid credentials", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

@@ -4,12 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.edit
 import com.mopr.fruits_app.R
+import com.mopr.fruits_app.database.FirestoreManager
 
 class ProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        val firestoreManager = FirestoreManager()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -17,6 +21,11 @@ class ProfileActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         findViewById<Button>(R.id.btnLogoutProfile).setOnClickListener {
+            firestoreManager.logout()
+            // Clear admin status
+            val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+            sharedPref.edit { remove("IS_ADMIN") }
+
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

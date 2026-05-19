@@ -7,19 +7,25 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.GridView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.edit
 import com.mopr.fruits_app.R
 import com.mopr.fruits_app.adapters.GridAdapter
-import com.mopr.fruits_app.database.DatabaseHelper
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import com.mopr.fruits_app.database.FirestoreManager
+import com.mopr.fruits_app.database.SeedData
+import kotlinx.coroutines.launch
+
 class HomeActivity : BaseActivity() {
-    private lateinit var db: DatabaseHelper
+    private lateinit var firestoreManager: FirestoreManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        db = DatabaseHelper(this)
+        firestoreManager = FirestoreManager()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -36,19 +42,21 @@ class HomeActivity : BaseActivity() {
             // Logic for adding a fruits (maybe a dialog or new activity)
         }
 
-        // Data source from DB
-        val fruitsList = db.getAllFruits()
+        // Load data source from Firestore
+        lifecycleScope.launch {
+            val fruitsList = firestoreManager.getAllFruits()
 
-        // Create adapter and set it to the GridView
-        val adapter = GridAdapter(this, fruitsList)
-        gridView.adapter = adapter
-        
-        // Handle item clicks
-        gridView.setOnItemClickListener { _, _, position, _ ->
-            val intent = Intent(this, FruitDetailActivity::class.java).apply {
-                putExtra("FRUITS_OBJ", fruitsList[position])
+            // Create adapter and set it to the GridView
+            val adapter = GridAdapter(this@HomeActivity, fruitsList)
+            gridView.adapter = adapter
+            
+            // Handle item clicks
+            gridView.setOnItemClickListener { _, _, position, _ ->
+                val intent = Intent(this@HomeActivity, FruitDetailActivity::class.java).apply {
+                    putExtra("FRUIT_OBJ", fruitsList[position])
+                }
+                startActivity(intent)
             }
-            startActivity(intent)
         }
     }
 
@@ -60,6 +68,11 @@ class HomeActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_logout -> {
+                firestoreManager.logout()
+                // Clear admin status
+                val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                sharedPref.edit { remove("IS_ADMIN") }
+
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
