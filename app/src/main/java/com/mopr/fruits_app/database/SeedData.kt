@@ -137,7 +137,7 @@ object SeedData {
         User(
             username = "admin",
             email = "admin@fruitapp.com",
-            password = "admin",
+            password = "admin123",
             isAdmin = true
         )
     )
