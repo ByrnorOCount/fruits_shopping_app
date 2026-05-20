@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationIconTint="@color/white"
-        app:title="User Profile"
+        app:title="@string/profile_title"
         app:titleTextColor="@color/bright_text_primary" />
 
     <ScrollView
@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Loading..."
+                        android:text="@string/loading"
                         android:textColor="@color/black"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -80,7 +80,7 @@
                         android:id="@+id/tvProfileStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Verified Member"
+                        android:text="@string/verified_member"
                         android:textColor="@color/leaf_green_top"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -106,7 +106,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Contact Information"
+                        android:text="@string/contact_info"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="18sp" />
@@ -122,7 +122,7 @@
                         android:id="@+id/tvProfileEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email: ..."
+                        android:text="@string/email_placeholder"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Phone: N/A"
+                        android:text="@string/phone_placeholder"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Address: Not Set"
+                        android:text="@string/address_placeholder"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -166,7 +166,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fruit Stats"
+                        android:text="@string/fruit_stats"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="18sp" />
@@ -182,7 +182,7 @@
                         android:id="@+id/tvFavoriteFruit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Favorite Fruit: None"
+                        android:text="@string/favorite_fruit_placeholder"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
@@ -191,7 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Recent Orders: 0 Deliveries"
+                        android:text="@string/recent_orders_placeholder"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -203,7 +203,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="#802D5A27"
-                android:text="My Cart"
+                android:text="@string/cart_title"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:cornerRadius="30dp"
@@ -216,7 +216,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#802D5A27"
-                android:text="Order History"
+                android:text="@string/order_history"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:cornerRadius="30dp"
@@ -229,7 +229,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#802D5A27"
-                android:text="My Favorites"
+                android:text="@string/my_favorites"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:cornerRadius="30dp"
@@ -242,7 +242,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#80D32F2F"
-                android:text="Logout"
+                android:text="@string/menu_logout"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:cornerRadius="30dp"

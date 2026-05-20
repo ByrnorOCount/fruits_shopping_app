@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationIconTint="@color/white"
-        app:title="Manage Fruit"
+        app:title="@string/manage_fruit_title"
         app:titleTextColor="@color/white" />
 
     <ScrollView
@@ -42,6 +42,7 @@
                     android:id="@+id/ivSelectedFruit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/fruit_image"
                     android:padding="16dp"
                     android:src="@drawable/ic_add" />
             </com.google.android.material.card.MaterialCardView>
