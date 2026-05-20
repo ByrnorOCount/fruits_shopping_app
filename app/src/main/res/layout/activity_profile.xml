@@ -15,12 +15,13 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg_main" />
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/leaf_green_top"
         android:elevation="4dp"
+        android:theme="@style/Theme.Fruits_App.Toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationIconTint="@color/white"
@@ -66,18 +67,20 @@
                         app:strokeWidth="2dp" />
 
                     <TextView
+                        android:id="@+id/tvProfileName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="John Doe"
+                        android:text="Loading..."
                         android:textColor="@color/black"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvProfileStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Gold Member"
+                        android:text="Verified Member"
                         android:textColor="@color/leaf_green_top"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -116,25 +119,28 @@
                         android:alpha="0.3" />
 
                     <TextView
+                        android:id="@+id/tvProfileEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email: john.doe@example.com"
+                        android:text="Email: ..."
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvProfilePhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Phone: +1 (555) 123-4567"
+                        android:text="Phone: N/A"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvProfileAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Address: 123 Orchard Lane, Fruitville, FV 90210"
+                        android:text="Address: Not Set"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -173,37 +179,57 @@
                         android:alpha="0.3" />
 
                     <TextView
+                        android:id="@+id/tvFavoriteFruit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Favorite Fruit: Organic Red Apples"
+                        android:text="Favorite Fruit: None"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvOrderCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Loyalty Points: 1,250 pts"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Recent Orders: 12 Deliveries"
+                        android:text="Recent Orders: 0 Deliveries"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <Button
-                android:id="@+id/btnEditProfile"
+                android:id="@+id/btnViewCart"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="#802D5A27"
-                android:text="Edit Profile"
+                android:text="My Cart"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="30dp"
+                app:strokeColor="@color/leaf_green_top"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnViewOrders"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#802D5A27"
+                android:text="Order History"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:cornerRadius="30dp"
+                app:strokeColor="@color/leaf_green_top"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnViewFavorites"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#802D5A27"
+                android:text="My Favorites"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:cornerRadius="30dp"

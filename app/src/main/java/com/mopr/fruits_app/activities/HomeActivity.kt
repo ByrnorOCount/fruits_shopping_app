@@ -6,7 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.GridView
-import androidx.appcompat.widget.Toolbar
+import com.google.android.material.appbar.MaterialToolbar
 import androidx.core.content.edit
 import com.mopr.fruits_app.R
 import com.mopr.fruits_app.adapters.GridAdapter
@@ -27,7 +27,7 @@ class HomeActivity : BaseActivity() {
 
         firestoreManager = FirestoreManager()
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val gridView = findViewById<GridView>(R.id.homeGridView)
@@ -39,7 +39,7 @@ class HomeActivity : BaseActivity() {
         fabAdd.visibility = if (isAdmin) View.VISIBLE else View.GONE
         
         fabAdd.setOnClickListener {
-            // Logic for adding a fruits (maybe a dialog or new activity)
+            startActivity(Intent(this, AdminFruitActivity::class.java))
         }
 
         // Load data source from Firestore
@@ -67,6 +67,19 @@ class HomeActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menu_cart -> {
+                startActivity(Intent(this, CartActivity::class.java))
+                true
+            }
+            R.id.menu_profile -> {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_favorites -> {
+                startActivity(Intent(this, FavoritesActivity::class.java))
+                true
+            }
             R.id.menu_logout -> {
                 firestoreManager.logout()
                 // Clear admin status
@@ -76,11 +89,6 @@ class HomeActivity : BaseActivity() {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
-                true
-            }
-            R.id.menu_profile -> {
-                val intent = Intent(this, ProfileActivity::class.java)
-                startActivity(intent)
                 true
             }
             R.id.menu_settings -> {

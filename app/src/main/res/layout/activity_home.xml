@@ -16,14 +16,16 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg_main" />
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/leaf_green_top"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
+        android:theme="@style/Theme.Fruits_App.Toolbar"
         app:layout_constraintTop_toTopOf="parent"
+        app:navigationIconTint="@color/white"
+        app:popupTheme="@style/PopupOverlay"
         app:title="@string/home_title"
         app:titleTextColor="@color/bright_text_primary" />
 

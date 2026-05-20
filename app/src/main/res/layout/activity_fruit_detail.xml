@@ -16,15 +16,17 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg_main" />
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/leaf_green_top"
         android:elevation="4dp"
+        android:theme="@style/Theme.Fruits_App.Toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationIconTint="@color/white"
+        app:popupTheme="@style/PopupOverlay"
         app:titleTextColor="@color/bright_text_primary" />
 
     <ScrollView
@@ -84,6 +86,15 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fruitDetailPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/leaf_green_top"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
