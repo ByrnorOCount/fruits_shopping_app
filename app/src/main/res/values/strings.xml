@@ -29,7 +29,30 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="edit_fruit_button">Edit</string>
     <string name="delete_fruit_button">Delete</string>
+    <string name="price_label">Price: $%.2f</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_cart">Cart</string>
+    <string name="favorite_fruit_label">Favorite Fruit: %s</string>
+    <string name="recent_orders_label">Recent Orders: %d Deliveries</string>
+    <string name="order_id_label">Order ID: %s</string>
+    <string name="order_date_label">Date: %s</string>
+    <string name="order_items_label">Items: %s</string>
+    <string name="order_total_label">Total: $%.2f</string>
 
     <!-- Accessibility -->
     <string name="grid_image_desc">Item image</string>
+    <string name="favorites">Favorites</string>
+
+    <!-- Admin Fruit Screen -->
+    <string name="edit_fruit_title">Edit %s</string>
+    <string name="select_image_title">Select Fruit Image</string>
+    <string name="error_required_fields">Name and Price are required</string>
+    <string name="success_fruit_saved">Fruit saved successfully</string>
+    <string name="error_saving_fruit">Error saving fruit</string>
+    <string name="tap_to_select_image">Tap to select image</string>
+    <string name="fruit_name">Fruit Name</string>
+    <string name="price_e_g_1_99">Price (e.g. 1.99)</string>
+    <string name="scientific_name">Scientific Name</string>
+    <string name="description">Description</string>
+    <string name="save_fruit">Save Fruit</string>
 </resources>
