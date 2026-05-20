@@ -12,14 +12,51 @@
 
         <!-- Surface and Text -->
         <item name="colorSurface">@color/woody_brown_bg</item>
-        <item name="colorOnSurface">@color/bright_text_primary</item>
-        <item name="colorOnSurfaceVariant">@color/bark_brown_secondary</item>
-        <item name="android:textColorPrimary">@color/bright_text_primary</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorSurfaceContainer">@color/woody_brown_bg</item>
+        <item name="colorOnSurfaceVariant">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/bark_brown_secondary</item>
+
+        <!-- Dialog Styling -->
+        <item name="alertDialogTheme">@style/CustomAlertDialog</item>
 
         <!-- Material Components styling -->
         <item name="colorSecondaryContainer">@color/bold_yellow_card</item>
         <item name="colorOnSecondaryContainer">@color/white</item>
+
+        <!-- Menu / Popup Styling -->
+        <item name="android:itemBackground">@color/bark_brown_secondary</item>
+        <item name="android:panelBackground">@color/bark_brown_secondary</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
+        <item name="actionBarPopupTheme">@style/PopupOverlay</item>
+    </style>
+
+    <style name="PopupOverlay" parent="ThemeOverlay.Material3.Dark">
+        <item name="android:colorBackground">@color/woody_brown_bg</item>
+        <item name="colorSurface">@color/woody_brown_bg</item>
+        <item name="colorSurfaceContainer">@color/woody_brown_bg</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/bark_brown_secondary</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:panelBackground">@color/woody_brown_bg</item>
+        <item name="android:itemBackground">@color/woody_brown_bg</item>
+    </style>
+
+    <style name="Theme.Fruits_App.Toolbar" parent="ThemeOverlay.Material3.Dark.ActionBar">
+        <item name="colorSurface">@color/woody_brown_bg</item>
+        <item name="colorSurfaceContainer">@color/woody_brown_bg</item>
+        <item name="android:colorBackground">@color/woody_brown_bg</item>
+    </style>
+
+    <style name="CustomAlertDialog" parent="Theme.Material3.DayNight.Dialog.Alert">
+        <item name="colorSurface">@color/woody_brown_bg</item>
+        <item name="android:background">@color/woody_brown_bg</item>
+    </style>
+
+    <style name="OverflowMenu" parent="Widget.Material3.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/woody_brown_bg</item>
     </style>
 
     <style name="Theme.Fruits_App" parent="Base.Theme.Fruits_App" />

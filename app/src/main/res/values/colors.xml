@@ -4,13 +4,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Nature Dark Theme Colors - Refined -->
-    <color name="woody_brown_bg">#805c23</color>   <!-- Content Zone Background -->
-    <color name="leaf_green_top">#718d2a</color>   <!-- Top Bar / Status Bar -->
+    <color name="woody_brown_bg">#774B06</color>   <!-- Content Zone Background -->
+    <color name="leaf_green_top">#809E28</color>   <!-- Top Bar / Status Bar | Also used for hint text-->
     <color name="bold_yellow_card">#AAc58f11</color> <!-- Cards (Distinct from Green/Brown) -->
     <color name="dark_green_deco">#AA3d8023</color>   <!-- Border/other deco -->
 
     <!-- Bright Text Colors -->
     <color name="bright_text_primary">#FFFFFF</color>
-    <color name="moss_green_text">#81c583</color>
+    <color name="moss_green_text">#28f62e</color>
     <color name="bark_brown_secondary">#bfada6</color>
+    <color name="pink_favorite">#E91E63</color>
 </resources>
