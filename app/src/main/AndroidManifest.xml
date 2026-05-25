@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fruits_App">
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Fruits_App.NoToolbar">
             <intent-filter>
@@ -22,32 +22,41 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignupActivity"
+            android:name=".ui.auth.SignupActivity"
             android:exported="false"
             android:theme="@style/Theme.Fruits_App.NoToolbar" />
         <activity
-            android:name=".activities.HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FruitDetailActivity"
+            android:name=".ui.fruit.FruitDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name=".ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CartActivity"
+            android:name=".ui.cart.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.CheckoutActivity"
+            android:name=".ui.checkout.CheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FavoritesActivity"
+            android:name=".ui.profile.FavoritesActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.OrderHistoryActivity"
+            android:name=".ui.profile.OrderHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.AdminFruitActivity"
+            android:name=".ui.admin.AdminFruitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.checkout.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.checkout.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.AdminStatsActivity"
             android:exported="false" />
     </application>
 
