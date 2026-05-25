@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.admin
 
 import android.os.Build
 import android.os.Bundle
@@ -11,14 +11,14 @@ import android.widget.GridView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.database.FirestoreManager
-import com.mopr.fruits_app.models.Fruit
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.data.model.Fruit
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 class AdminFruitActivity : BaseActivity() {
     private lateinit var firestoreManager: FirestoreManager
@@ -89,7 +89,7 @@ class AdminFruitActivity : BaseActivity() {
 
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_image_picker, null)
         val gridView = dialogView.findViewById<GridView>(R.id.gvImagePicker)
-        
+
         val dialog = AlertDialog.Builder(this, R.style.CustomAlertDialog)
             .setTitle(R.string.select_image_title)
             .setView(dialogView)
