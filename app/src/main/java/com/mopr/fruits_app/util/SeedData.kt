@@ -1,8 +1,8 @@
-package com.mopr.fruits_app.database
+package com.mopr.fruits_app.util
 
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.models.Fruit
-import com.mopr.fruits_app.models.User
+import com.mopr.fruits_app.data.model.Fruit
+import com.mopr.fruits_app.data.model.User
 
 object SeedData {
     val fruits = listOf(

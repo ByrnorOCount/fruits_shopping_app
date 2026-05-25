@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,11 @@ import com.google.android.material.appbar.MaterialToolbar
 import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.database.FirestoreManager
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.data.model.Order
+import com.mopr.fruits_app.ui.auth.LoginActivity
+import com.mopr.fruits_app.ui.cart.CartActivity
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
 
 class ProfileActivity : BaseActivity() {
@@ -68,7 +72,7 @@ class ProfileActivity : BaseActivity() {
         }
     }
 
-    private fun calculateFavoriteFruit(orders: List<com.mopr.fruits_app.models.Order>) {
+    private fun calculateFavoriteFruit(orders: List<Order>) {
         if (orders.isEmpty()) {
             findViewById<TextView>(R.id.tvFavoriteFruit).text = getString(R.string.favorite_fruit_label, "None")
             return

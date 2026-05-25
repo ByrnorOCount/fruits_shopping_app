@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.database.FirestoreManager
-import com.mopr.fruits_app.models.Order
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.data.model.Order
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date

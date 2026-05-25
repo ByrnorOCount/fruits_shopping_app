@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.models
+package com.mopr.fruits_app.data.model
 
 import android.os.Parcelable
 import com.google.firebase.firestore.PropertyName

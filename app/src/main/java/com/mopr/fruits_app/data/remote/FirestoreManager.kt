@@ -1,12 +1,12 @@
-package com.mopr.fruits_app.database
+package com.mopr.fruits_app.data.remote
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mopr.fruits_app.models.CartItem
-import com.mopr.fruits_app.models.Fruit
-import com.mopr.fruits_app.models.Order
-import com.mopr.fruits_app.models.User
+import com.mopr.fruits_app.data.model.CartItem
+import com.mopr.fruits_app.data.model.Fruit
+import com.mopr.fruits_app.data.model.Order
+import com.mopr.fruits_app.data.model.User
 import kotlinx.coroutines.tasks.await
 
 class FirestoreManager {

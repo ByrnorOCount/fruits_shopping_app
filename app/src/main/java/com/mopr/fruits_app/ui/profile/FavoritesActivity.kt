@@ -1,13 +1,16 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
 import android.widget.GridView
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.adapters.GridAdapter
-import com.mopr.fruits_app.database.FirestoreManager
+import com.mopr.fruits_app.ui.fruit.FruitAdapter
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.ui.fruit.FruitDetailActivity
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
 
 class FavoritesActivity : BaseActivity() {
@@ -28,7 +31,7 @@ class FavoritesActivity : BaseActivity() {
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         // Hide FAB in favorites
-        findViewById<android.view.View>(R.id.fabAddFruit).visibility = android.view.View.GONE
+        findViewById<View>(R.id.fabAddFruit).visibility = View.GONE
 
         val gridView = findViewById<GridView>(R.id.homeGridView)
 
@@ -37,7 +40,7 @@ class FavoritesActivity : BaseActivity() {
             val favoriteIds = firestoreManager.getFavoriteFruitIds(userId!!)
             val favoriteFruits = allFruits.filter { favoriteIds.contains(it.id) }
 
-            val adapter = GridAdapter(this@FavoritesActivity, favoriteFruits)
+            val adapter = FruitAdapter(this@FavoritesActivity, favoriteFruits)
             gridView.adapter = adapter
 
             gridView.setOnItemClickListener { _, _, position, _ ->

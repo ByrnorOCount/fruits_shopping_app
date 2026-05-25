@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.adapters
+package com.mopr.fruits_app.ui.fruit
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.models.Fruit
+import com.mopr.fruits_app.data.model.Fruit
 
-class GridAdapter (
+class FruitAdapter (
     private val context: Context,
     private val fruitList: List<Fruit>
 ) : BaseAdapter() {

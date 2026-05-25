@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.adapters
+package com.mopr.fruits_app.ui.cart
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.models.CartItem
+import com.mopr.fruits_app.data.model.CartItem
 
 class CartAdapter(
     private var items: List<CartItem>,

@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.fruit
 
 import android.content.Intent
 import android.os.Build
@@ -11,12 +11,14 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.appbar.MaterialToolbar
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.database.FirestoreManager
-import com.mopr.fruits_app.models.CartItem
-import com.mopr.fruits_app.models.Fruit
+import com.mopr.fruits_app.ui.admin.AdminFruitActivity
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.data.model.CartItem
+import com.mopr.fruits_app.data.model.Fruit
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
 
 class FruitDetailActivity : BaseActivity() {
@@ -53,7 +55,7 @@ class FruitDetailActivity : BaseActivity() {
             findViewById<TextView>(R.id.fruitHealthBenefits).text = fruit.healthBenefits
 
             supportActionBar?.title = fruit.name
-            
+
             checkFavoriteStatus(fruit.id)
 
             // Handle admin visibility

@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,16 +6,20 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.GridView
-import com.google.android.material.appbar.MaterialToolbar
 import androidx.core.content.edit
-import com.mopr.fruits_app.R
-import com.mopr.fruits_app.adapters.GridAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.mopr.fruits_app.database.FirestoreManager
-import com.mopr.fruits_app.database.SeedData
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.mopr.fruits_app.R
+import com.mopr.fruits_app.ui.admin.AdminFruitActivity
+import com.mopr.fruits_app.ui.cart.CartActivity
+import com.mopr.fruits_app.ui.profile.FavoritesActivity
+import com.mopr.fruits_app.ui.fruit.FruitDetailActivity
+import com.mopr.fruits_app.ui.profile.ProfileActivity
+import com.mopr.fruits_app.ui.fruit.FruitAdapter
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.ui.auth.LoginActivity
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
 
 class HomeActivity : BaseActivity() {
@@ -37,7 +41,7 @@ class HomeActivity : BaseActivity() {
         val isAdmin = sharedPref.getBoolean("IS_ADMIN", false)
         val fabAdd = findViewById<FloatingActionButton>(R.id.fabAddFruit)
         fabAdd.visibility = if (isAdmin) View.VISIBLE else View.GONE
-        
+
         fabAdd.setOnClickListener {
             startActivity(Intent(this, AdminFruitActivity::class.java))
         }
@@ -47,9 +51,9 @@ class HomeActivity : BaseActivity() {
             val fruitsList = firestoreManager.getAllFruits()
 
             // Create adapter and set it to the GridView
-            val adapter = GridAdapter(this@HomeActivity, fruitsList)
+            val adapter = FruitAdapter(this@HomeActivity, fruitsList)
             gridView.adapter = adapter
-            
+
             // Handle item clicks
             gridView.setOnItemClickListener { _, _, position, _ ->
                 val intent = Intent(this@HomeActivity, FruitDetailActivity::class.java).apply {

@@ -1,16 +1,18 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.checkout
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.appbar.MaterialToolbar
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.database.FirestoreManager
-import com.mopr.fruits_app.models.CartItem
-import com.mopr.fruits_app.models.Order
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.data.model.CartItem
+import com.mopr.fruits_app.data.model.Order
+import com.mopr.fruits_app.ui.home.HomeActivity
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
 
 class CheckoutActivity : BaseActivity() {
@@ -47,7 +49,7 @@ class CheckoutActivity : BaseActivity() {
                 summary.append("${item.fruitName} x${item.quantity} - $${String.format("%.2f", item.price * item.quantity)}\n")
                 total += item.price * item.quantity
             }
-            
+
             tvSummary.text = summary.toString()
             tvTotal.text = "Total: $${String.format("%.2f", total)}"
         }

@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,10 @@ import android.widget.Toast
 import com.mopr.fruits_app.R
 import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
-import com.mopr.fruits_app.database.FirestoreManager
-import com.mopr.fruits_app.database.SeedData
+import com.mopr.fruits_app.util.BaseActivity
+import com.mopr.fruits_app.ui.home.HomeActivity
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.util.SeedData
 import kotlinx.coroutines.launch
 
 class LoginActivity : BaseActivity() {

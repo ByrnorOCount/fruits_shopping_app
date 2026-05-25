@@ -1,4 +1,4 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.util
 
 import android.os.Bundle
 import android.util.Log

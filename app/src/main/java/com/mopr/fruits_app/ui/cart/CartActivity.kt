@@ -1,17 +1,20 @@
-package com.mopr.fruits_app.activities
+package com.mopr.fruits_app.ui.cart
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import com.mopr.fruits_app.R
-import com.mopr.fruits_app.adapters.CartAdapter
-import com.mopr.fruits_app.database.FirestoreManager
+import com.mopr.fruits_app.ui.checkout.CheckoutActivity
+import com.mopr.fruits_app.ui.cart.CartAdapter
+import com.mopr.fruits_app.data.remote.FirestoreManager
+import com.mopr.fruits_app.data.model.CartItem
+import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
 
 class CartActivity : BaseActivity() {
@@ -85,7 +88,7 @@ class CartActivity : BaseActivity() {
         }
     }
 
-    private fun updateTotalPrice(items: List<com.mopr.fruits_app.models.CartItem>) {
+    private fun updateTotalPrice(items: List<CartItem>) {
         val total = items.sumOf { it.price * it.quantity }
         tvTotal.text = String.format("$%.2f", total)
     }
