@@ -120,29 +120,35 @@
 
                     <TextView
                         android:id="@+id/tvProfileEmail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/email_placeholder"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:padding="8dp"
+                        android:background="#33FFFFFF" />
 
                     <TextView
                         android:id="@+id/tvProfilePhone"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/phone_placeholder"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:padding="8dp"
+                        android:background="#33FFFFFF" />
 
                     <TextView
                         android:id="@+id/tvProfileAddress"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/address_placeholder"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:padding="8dp"
+                        android:background="#33FFFFFF" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -180,20 +186,24 @@
 
                     <TextView
                         android:id="@+id/tvFavoriteFruit"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/favorite_fruit_placeholder"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:padding="8dp"
+                        android:background="#33FFFFFF" />
 
                     <TextView
                         android:id="@+id/tvOrderCount"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/recent_orders_placeholder"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:padding="8dp"
+                        android:background="#33FFFFFF" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -232,6 +242,20 @@
                 android:text="@string/my_favorites"
                 android:textColor="@color/white"
                 android:textStyle="bold"
+                app:cornerRadius="30dp"
+                app:strokeColor="@color/leaf_green_top"
+                app:strokeWidth="2dp" />
+
+            <Button
+                android:id="@+id/btnAdminStats"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#802D5A27"
+                android:text="Admin Statistics"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="gone"
                 app:cornerRadius="30dp"
                 app:strokeColor="@color/leaf_green_top"
                 app:strokeWidth="2dp" />

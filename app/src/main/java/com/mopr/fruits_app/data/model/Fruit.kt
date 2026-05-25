@@ -12,4 +12,5 @@ data class Fruit(
     val description: String = "",
     val scientificName: String = "",
     val healthBenefits: String = "",
+    val category: String = ""
 ) : Parcelable

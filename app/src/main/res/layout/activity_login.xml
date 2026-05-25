@@ -133,6 +133,18 @@
             app:strokeColor="@color/leaf_green_top"
             app:strokeWidth="2dp" />
 
+        <Button
+            android:id="@+id/btnResetDatabase"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Debug: Reset &amp; Reseed Data"
+            android:textColor="@color/pink_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSignupLink" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

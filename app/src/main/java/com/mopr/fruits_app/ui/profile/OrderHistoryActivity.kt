@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.appbar.MaterialToolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ import java.util.Locale
 class OrderHistoryActivity : BaseActivity() {
     private lateinit var firestoreManager: FirestoreManager
     private var userId: String? = null
+    private lateinit var rv: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,24 +35,46 @@ class OrderHistoryActivity : BaseActivity() {
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Order History"
+        supportActionBar?.title = getString(R.string.order_history)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        val rv = findViewById<RecyclerView>(R.id.rvItems)
+        rv = findViewById(R.id.rvItems)
         rv.layoutManager = LinearLayoutManager(this)
 
+        loadOrderHistory()
+    }
+
+    private fun loadOrderHistory() {
+        val uid = userId ?: return
         lifecycleScope.launch {
-            val orders = firestoreManager.getOrderHistory(userId!!)
-            rv.adapter = OrderAdapter(orders)
+            val orders = firestoreManager.getOrderHistory(uid)
+            rv.adapter = OrderAdapter(orders) { orderId ->
+                cancelOrder(orderId)
+            }
         }
     }
 
-    class OrderAdapter(private val orders: List<Order>) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
+    private fun cancelOrder(orderId: String) {
+        lifecycleScope.launch {
+            if (firestoreManager.cancelOrder(orderId)) {
+                Toast.makeText(this@OrderHistoryActivity, "Order Cancelled", Toast.LENGTH_SHORT).show()
+                loadOrderHistory()
+            }
+        }
+    }
+
+    class OrderAdapter(
+        private val orders: List<Order>,
+        private val onCancelClick: (String) -> Unit
+    ) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
+
         class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val tvId: TextView = view.findViewById(R.id.tvOrderId)
             val tvDate: TextView = view.findViewById(R.id.tvOrderDate)
             val tvItems: TextView = view.findViewById(R.id.tvOrderItems)
             val tvTotal: TextView = view.findViewById(R.id.tvOrderTotal)
+            val tvStatus: TextView = view.findViewById(R.id.tvOrderStatus)
+            val btnCancel: Button = view.findViewById(R.id.btnCancelOrder)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -70,6 +95,13 @@ class OrderHistoryActivity : BaseActivity() {
             holder.tvItems.text = context.getString(R.string.order_items_label, itemSummary)
             
             holder.tvTotal.text = context.getString(R.string.order_total_label, order.totalPrice)
+            holder.tvStatus.text = context.getString(R.string.status_label, order.status)
+
+            holder.btnCancel.visibility = if (order.status == "Completed" || order.status == "Pending") View.VISIBLE else View.GONE
+            
+            holder.btnCancel.setOnClickListener {
+                onCancelClick(order.id)
+            }
         }
 
         override fun getItemCount(): Int = orders.size

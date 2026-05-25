@@ -1,6 +1,5 @@
 package com.mopr.fruits_app.data.model
 
-import android.accessibilityservice.GestureDescription
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 

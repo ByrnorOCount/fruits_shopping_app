@@ -6,17 +6,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.mopr.fruits_app.R
 import com.mopr.fruits_app.ui.admin.AdminFruitActivity
 import com.mopr.fruits_app.data.remote.FirestoreManager
 import com.mopr.fruits_app.data.model.CartItem
+import com.mopr.fruits_app.data.model.Comment
 import com.mopr.fruits_app.data.model.Fruit
 import com.mopr.fruits_app.util.BaseActivity
 import kotlinx.coroutines.launch
@@ -26,6 +25,10 @@ class FruitDetailActivity : BaseActivity() {
     private var currentFruit: Fruit? = null
     private var isFavorite = false
     private var userId: String? = null
+    private var userName: String = "Guest"
+
+    private lateinit var rvComments: RecyclerView
+    private lateinit var rvRelated: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +36,19 @@ class FruitDetailActivity : BaseActivity() {
 
         firestoreManager = FirestoreManager()
         userId = firestoreManager.getCurrentUserId()
+        
+        loadUserName()
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
+        rvComments = findViewById(R.id.rvComments)
+        rvComments.layoutManager = LinearLayoutManager(this)
+        
+        rvRelated = findViewById(R.id.rvRelatedProducts)
+        rvRelated.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         currentFruit = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("FRUIT_OBJ", Fruit::class.java)
@@ -57,6 +68,8 @@ class FruitDetailActivity : BaseActivity() {
             supportActionBar?.title = fruit.name
 
             checkFavoriteStatus(fruit.id)
+            loadComments(fruit.id)
+            loadRelatedProducts(fruit.category, fruit.id)
 
             // Handle admin visibility
             val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
@@ -77,6 +90,61 @@ class FruitDetailActivity : BaseActivity() {
 
             findViewById<Button>(R.id.btnDeleteFruit).setOnClickListener {
                 deleteFruit(fruit.id)
+            }
+
+            findViewById<Button>(R.id.btnSubmitComment).setOnClickListener {
+                submitComment(fruit.id)
+            }
+        }
+    }
+
+    private fun loadUserName() {
+        val uid = userId ?: return
+        lifecycleScope.launch {
+            val user = firestoreManager.getUserData(uid)
+            userName = user?.username ?: "Guest"
+        }
+    }
+
+    private fun loadComments(fruitId: String) {
+        lifecycleScope.launch {
+            val comments = firestoreManager.getComments(fruitId)
+            rvComments.adapter = CommentAdapter(comments)
+        }
+    }
+
+    private fun loadRelatedProducts(category: String, fruitId: String) {
+        if (category.isEmpty()) return
+        lifecycleScope.launch {
+            val related = firestoreManager.getRelatedFruits(category, fruitId)
+            rvRelated.adapter = RelatedFruitAdapter(related)
+        }
+    }
+
+    private fun submitComment(fruitId: String) {
+        val text = findViewById<EditText>(R.id.editComment).text.toString()
+        val rating = findViewById<RatingBar>(R.id.editRating).rating.toInt()
+        
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter a comment", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val comment = Comment(
+            userId = userId ?: "guest",
+            userName = userName,
+            fruitId = fruitId,
+            text = text,
+            rating = rating,
+            timestamp = System.currentTimeMillis()
+        )
+
+        lifecycleScope.launch {
+            if (firestoreManager.addComment(comment)) {
+                Toast.makeText(this@FruitDetailActivity, "Comment Posted", Toast.LENGTH_SHORT).show()
+                findViewById<EditText>(R.id.editComment).text.clear()
+                findViewById<RatingBar>(R.id.editRating).rating = 0f
+                loadComments(fruitId)
             }
         }
     }

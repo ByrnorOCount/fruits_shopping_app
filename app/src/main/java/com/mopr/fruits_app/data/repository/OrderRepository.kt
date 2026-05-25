@@ -7,6 +7,5 @@ class OrderRepository(private val firestore: FirestoreManager) {
     suspend fun placeOrder(order: Order) = firestore.placeOrder(order)
     suspend fun getHistory(userId: String) = firestore.getOrderHistory(userId)
 
-    // New Feature Placeholder
-    suspend fun cancelOrder(orderId: String) = true
+    suspend fun cancelOrder(orderId: String) = firestore.cancelOrder(orderId)
 }

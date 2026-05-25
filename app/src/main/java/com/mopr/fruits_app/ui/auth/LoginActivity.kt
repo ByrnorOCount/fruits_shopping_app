@@ -24,14 +24,14 @@ class LoginActivity : BaseActivity() {
 
         firestoreManager = FirestoreManager()
 
-        // One-time upload of SeedData to Firebase
+        // Auto-seed check on startup
         lifecycleScope.launch {
-            firestoreManager.seedUsers(SeedData.users)
-            firestoreManager.seedFruits(SeedData.fruits)
+            seedAllData(false)
         }
 
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val tvSignupLink = findViewById<TextView>(R.id.tvSignupLink)
+        val btnReset = findViewById<Button>(R.id.btnResetDatabase)
         val editUsername = findViewById<EditText>(R.id.editUsername)
         val editPassword = findViewById<EditText>(R.id.editPassword)
 
@@ -42,7 +42,6 @@ class LoginActivity : BaseActivity() {
             lifecycleScope.launch {
                 val user = firestoreManager.loginUser(identifier, password)
                 if (user != null) {
-                    // Store admin status in SharedPreferences for easy access
                     val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
                     sharedPref.edit { putBoolean("IS_ADMIN", user.isAdmin) }
 
@@ -55,9 +54,28 @@ class LoginActivity : BaseActivity() {
             }
         }
 
+        btnReset.setOnClickListener {
+            lifecycleScope.launch {
+                Toast.makeText(this@LoginActivity, "Wiping and Reseeding...", Toast.LENGTH_SHORT).show()
+                seedAllData(true)
+                Toast.makeText(this@LoginActivity, "Database Reset Complete", Toast.LENGTH_LONG).show()
+            }
+        }
+
         tvSignupLink.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private suspend fun seedAllData(forceWipe: Boolean) {
+        if (forceWipe) {
+            firestoreManager.wipeEverything()
+        }
+        val idMap = firestoreManager.seedUsers(SeedData.users)
+        firestoreManager.seedFruits(SeedData.fruits)
+        firestoreManager.seedPromotions(SeedData.promotions)
+        firestoreManager.seedComments(SeedData.comments, idMap)
+        firestoreManager.seedOrders(SeedData.orders, idMap)
     }
 }

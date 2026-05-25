@@ -10,6 +10,8 @@ data class User(
     val username: String = "",
     val email: String = "",
     val password: String = "",
+    val phoneNumber: String = "",
+    val addresses: List<Address> = emptyList(),
     @get:PropertyName("isAdmin")
     var isAdmin: Boolean = false
 ) : Parcelable

@@ -2,6 +2,7 @@ package com.mopr.fruits_app.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.appbar.MaterialToolbar
@@ -43,6 +44,14 @@ class ProfileActivity : BaseActivity() {
             startActivity(Intent(this, FavoritesActivity::class.java))
         }
 
+        val btnAdminStats = findViewById<Button>(R.id.btnAdminStats)
+        val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val isAdmin = sharedPref.getBoolean("IS_ADMIN", false)
+        btnAdminStats.visibility = if (isAdmin) View.VISIBLE else View.GONE
+        btnAdminStats.setOnClickListener {
+            startActivity(Intent(this, com.mopr.fruits_app.ui.admin.AdminStatsActivity::class.java))
+        }
+
         findViewById<Button>(R.id.btnLogoutProfile).setOnClickListener {
             firestoreManager.logout()
             // Clear admin status
@@ -63,6 +72,14 @@ class ProfileActivity : BaseActivity() {
             if (user != null) {
                 findViewById<TextView>(R.id.tvProfileName).text = user.username
                 findViewById<TextView>(R.id.tvProfileEmail).text = "Email: ${user.email}"
+                findViewById<TextView>(R.id.tvProfilePhone).text = "Phone: ${user.phoneNumber}"
+                
+                val addressSummary = if (user.addresses.isNotEmpty()) {
+                    user.addresses.joinToString("\n") { "${it.name}: ${it.street}" }
+                } else {
+                    "Not Set"
+                }
+                findViewById<TextView>(R.id.tvProfileAddress).text = "Address: $addressSummary"
                 
                 val orders = firestoreManager.getOrderHistory(userId)
                 findViewById<TextView>(R.id.tvOrderCount).text = getString(R.string.recent_orders_label, orders.size)

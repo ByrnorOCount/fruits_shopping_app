@@ -7,6 +7,10 @@ import com.mopr.fruits_app.data.model.CartItem
 import com.mopr.fruits_app.data.model.Fruit
 import com.mopr.fruits_app.data.model.Order
 import com.mopr.fruits_app.data.model.User
+import com.mopr.fruits_app.data.model.Address
+import com.mopr.fruits_app.data.model.Comment
+import com.mopr.fruits_app.data.model.Promotion
+import com.mopr.fruits_app.data.model.AdminStats
 import kotlinx.coroutines.tasks.await
 
 class FirestoreManager {
@@ -17,6 +21,7 @@ class FirestoreManager {
     private val usersCollection = db.collection("users")
     private val fruitsCollection = db.collection("fruits")
     private val ordersCollection = db.collection("orders")
+    private val promotionsCollection = db.collection("promotions")
 
     suspend fun registerUser(user: User): Boolean {
         return try {
@@ -107,10 +112,27 @@ class FirestoreManager {
         }
     }
 
+    // Break glass in case of emergency
+    suspend fun wipeEverything() {
+        try {
+            // We have to delete documents one by one in mobile SDK
+            val collections = listOf("fruits", "orders", "promotions", "comments", "users")
+            for (coll in collections) {
+                val snapshot = db.collection(coll).get().await()
+                for (doc in snapshot.documents) {
+                    doc.reference.delete().await()
+                }
+            }
+            Log.d(tag, "All collections wiped successfully")
+        } catch (e: Exception) {
+            Log.e(tag, "Wipe failed: ${e.message}")
+        }
+    }
+
     suspend fun seedFruits(fruits: List<Fruit>): Boolean {
         return try {
             val snapshot = fruitsCollection.get().await()
-            val needsMigration = snapshot.documents.any { !it.contains("price") || !it.contains("id") }
+            val needsMigration = snapshot.documents.any { !it.contains("category") }
 
             if (needsMigration || snapshot.isEmpty) {
                 Log.d(tag, "Seeding/Migrating fruits...")
@@ -130,6 +152,113 @@ class FirestoreManager {
         } catch (e: Exception) {
             Log.e(tag, "Error seeding fruits: ${e.message}", e)
             false
+        }
+    }
+
+    suspend fun seedPromotions(promotions: List<Promotion>) {
+        try {
+            val snapshot = promotionsCollection.get().await()
+            if (snapshot.isEmpty) {
+                for (promo in promotions) {
+                    promotionsCollection.document(promo.id).set(promo).await()
+                }
+                Log.d(tag, "Promotions seeded")
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error seeding promotions: ${e.message}")
+        }
+    }
+
+    suspend fun seedComments(comments: List<Comment>, idMap: Map<String, String>) {
+        try {
+            val snapshot = db.collection("comments").get().await()
+            if (snapshot.isEmpty || idMap.isNotEmpty()) {
+                if (!snapshot.isEmpty && idMap.isNotEmpty()) {
+                    for (doc in snapshot.documents) doc.reference.delete().await()
+                }
+                for (comment in comments) {
+                    val realUid = idMap[comment.userId] ?: comment.userId
+                    val updatedComment = comment.copy(userId = realUid)
+                    db.collection("comments").document(comment.id).set(updatedComment).await()
+                }
+                Log.d(tag, "Comments seeded")
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error seeding comments: ${e.message}")
+        }
+    }
+
+    suspend fun seedUsers(users: List<User>): Map<String, String> {
+        val idMap = mutableMapOf<String, String>()
+        for (user in users) {
+            try {
+                val query = usersCollection.whereEqualTo("username", user.username).limit(1).get().await()
+                if (query.isEmpty) {
+                    // 1. Attempt to Register (Creates Auth + Firestore doc with correct UID)
+                    val authResult = try {
+                        auth.createUserWithEmailAndPassword(user.email, user.password).await()
+                    } catch (e: Exception) {
+                        null
+                    }
+                    
+                    val uid = authResult?.user?.uid ?: run {
+                        // If registration fails, try sign-in to get UID
+                        try {
+                            auth.signInWithEmailAndPassword(user.email, user.password).await().user?.uid
+                        } catch (ae: Exception) { null }
+                    }
+
+                    if (uid != null) {
+                        val userWithId = user.copy(id = uid)
+                        usersCollection.document(uid).set(userWithId).await()
+                        idMap[user.id] = uid
+                        Log.d(tag, "Fully seeded user: ${user.username} -> $uid")
+                        auth.signOut()
+                    }
+                } else {
+                    val doc = query.documents[0]
+                    val uid = doc.id
+                    idMap[user.id] = uid
+                    
+                    val updates = mutableMapOf<String, Any>()
+                    updates["phoneNumber"] = user.phoneNumber
+                    updates["addresses"] = user.addresses
+                    updates["isAdmin"] = user.isAdmin
+                    
+                    usersCollection.document(uid).update(updates).await()
+                    Log.d(tag, "Updated profile fields for: ${user.username}")
+                }
+            } catch (e: Exception) {
+                Log.e(tag, "Error seeding user ${user.username}: ${e.message}")
+            }
+        }
+        return idMap
+    }
+
+    suspend fun seedOrders(orders: List<Order>, idMap: Map<String, String>) {
+        try {
+            val snapshot = ordersCollection.get().await()
+            // We re-seed if empty or if we have a mapping to apply (meaning we just wiped or are fixing things)
+            if (snapshot.isEmpty || idMap.isNotEmpty()) {
+                if (!snapshot.isEmpty && idMap.isNotEmpty()) {
+                    // Clear old if we are re-mapping
+                    for (doc in snapshot.documents) doc.reference.delete().await()
+                }
+
+                for (order in orders) {
+                    val realUid = idMap[order.userId] ?: order.userId
+                    val updatedAddress = order.address?.copy(userId = realUid)
+                    
+                    val orderWithRealId = order.copy(
+                        userId = realUid,
+                        address = updatedAddress
+                    )
+                    ordersCollection.document(order.id).set(orderWithRealId).await()
+                }
+                Log.d(tag, "Orders seeded with correct UIDs")
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error seeding orders: ${e.message}")
         }
     }
 
@@ -260,22 +389,124 @@ class FirestoreManager {
         }
     }
 
-    suspend fun seedUsers(users: List<User>) {
-        for (user in users) {
-            try {
-                val query = usersCollection.whereEqualTo("username", user.username).limit(1).get().await()
-                if (query.isEmpty) {
-                    registerUser(user)
-                    Log.d(tag, "Seeded new user: ${user.username}")
-                } else {
-                    // Force update the isAdmin field to ensure it's correct in the DB
-                    val uid = query.documents[0].id
-                    usersCollection.document(uid).update("isAdmin", user.isAdmin).await()
-                    Log.d(tag, "Updated existing user perms: ${user.username}")
-                }
-            } catch (e: Exception) {
-                Log.e(tag, "Error seeding user ${user.username}: ${e.message}")
+    suspend fun getAddresses(userId: String): List<Address> {
+        return try {
+            val doc = usersCollection.document(userId).get().await()
+            val user = doc.toObject(User::class.java)
+            user?.addresses ?: emptyList()
+        } catch (e: Exception) {
+            Log.e(tag, "Error getting addresses: ${e.message}", e)
+            emptyList()
+        }
+    }
+
+    suspend fun addAddress(userId: String, address: Address): Boolean {
+        return try {
+            val user = getUserData(userId) ?: return false
+            val newAddresses = user.addresses.toMutableList()
+            
+            val addrToAdd = if (address.id.isEmpty()) {
+                address.copy(id = "addr_" + System.currentTimeMillis(), userId = userId)
+            } else {
+                address.copy(userId = userId)
             }
+            
+            val index = newAddresses.indexOfFirst { it.id == addrToAdd.id }
+            if (index != -1) newAddresses[index] = addrToAdd else newAddresses.add(addrToAdd)
+            
+            usersCollection.document(userId).update("addresses", newAddresses).await()
+            true
+        } catch (e: Exception) {
+            Log.e(tag, "Error adding address: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun deleteAddress(userId: String, addressId: String): Boolean {
+        return try {
+            val user = getUserData(userId) ?: return false
+            val newAddresses = user.addresses.filter { it.id != addressId }
+            usersCollection.document(userId).update("addresses", newAddresses).await()
+            true
+        } catch (e: Exception) {
+            Log.e(tag, "Error deleting address: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun validatePromoCode(code: String): Promotion? {
+        return try {
+            val query = promotionsCollection.whereEqualTo("code", code).whereEqualTo("active", true).limit(1).get().await()
+            if (query.isEmpty) null else query.documents[0].toObject(Promotion::class.java)
+        } catch (e: Exception) {
+            Log.e(tag, "Error validating promo code: ${e.message}", e)
+            null
+        }
+    }
+
+    suspend fun cancelOrder(orderId: String): Boolean {
+        return try {
+            ordersCollection.document(orderId).update("status", "Cancelled").await()
+            true
+        } catch (e: Exception) {
+            Log.e(tag, "Error cancelling order: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun getComments(fruitId: String): List<Comment> {
+        return try {
+            val snapshot = db.collection("comments").whereEqualTo("fruitId", fruitId).get().await()
+            snapshot.toObjects(Comment::class.java).sortedByDescending { it.timestamp }
+        } catch (e: Exception) {
+            Log.e(tag, "Error getting comments: ${e.message}", e)
+            emptyList()
+        }
+    }
+
+    suspend fun addComment(comment: Comment): Boolean {
+        return try {
+            val ref = db.collection("comments").document()
+            val commentWithId = comment.copy(id = ref.id)
+            ref.set(commentWithId).await()
+            true
+        } catch (e: Exception) {
+            Log.e(tag, "Error adding comment: ${e.message}", e)
+            false
+        }
+    }
+
+    suspend fun getRelatedFruits(category: String, currentFruitId: String): List<Fruit> {
+        return try {
+            val snapshot = fruitsCollection.whereEqualTo("category", category).limit(10).get().await()
+            snapshot.toObjects(Fruit::class.java).filter { it.id != currentFruitId }
+        } catch (e: Exception) {
+            Log.e(tag, "Error getting related fruits: ${e.message}", e)
+            emptyList()
+        }
+    }
+
+    suspend fun getAdminStats(): AdminStats {
+        return try {
+            val snapshot = ordersCollection.get().await()
+            val orders = snapshot.toObjects(Order::class.java)
+            
+            val totalRevenue = orders.sumOf { it.totalPrice }
+            val totalOrders = orders.size
+            
+            val fruitCounts = mutableMapOf<String, Int>()
+            for (order in orders) {
+                for (item in order.items) {
+                    fruitCounts[item.fruitName] = fruitCounts.getOrDefault(item.fruitName, 0) + item.quantity
+                }
+            }
+            
+            val topSelling = fruitCounts.entries.sortedByDescending { it.value }.take(5).map { "${it.key} (${it.value})" }
+            
+            AdminStats(totalRevenue, totalOrders, topSelling)
+        } catch (e: Exception) {
+            Log.e(tag, "Error getting admin stats: ${e.message}", e)
+            AdminStats()
         }
     }
 

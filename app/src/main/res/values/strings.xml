@@ -94,4 +94,37 @@
     <string name="order_date_placeholder">Date: …</string>
     <string name="order_items_placeholder">Items…</string>
     <string name="order_total_placeholder">Total: $0.00</string>
+
+    <!-- New Feature Strings -->
+    <string name="manage_addresses">Manage Addresses</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="address_home">Home</string>
+    <string name="address_details_placeholder">123 Street, City, ZIP</string>
+    <string name="default_address_label">Default Address</string>
+    <string name="select_payment_method">Select Payment Method</string>
+    <string name="payment_credit_card">Credit / Debit Card</string>
+    <string name="payment_paypal">PayPal</string>
+    <string name="payment_cash">Cash on Delivery</string>
+    <string name="confirm_payment_method">Confirm Payment Method</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="no_address_selected">No address selected</string>
+    <string name="select_address">Select Address</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="no_payment_method_selected">No payment method selected</string>
+    <string name="select_payment">Select Payment</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="enter_promo_code">Enter Code</string>
+    <string name="apply_promo">Apply</string>
+    <string name="related_products">Related Products</string>
+    <string name="reviews_title">Reviews</string>
+    <string name="add_review_hint">Add a review…</string>
+    <string name="post_review">Post Review</string>
+    <string name="admin_stats_title">Admin Statistics</string>
+    <string name="total_revenue">Total Revenue</string>
+    <string name="total_orders">Total Orders</string>
+    <string name="top_selling_fruits">Top Selling Fruits</string>
+    <string name="loading_stats">Loading…</string>
+    <string name="status_label">Status: %s</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="comment_placeholder">Comment text goes here</string>
 </resources>
