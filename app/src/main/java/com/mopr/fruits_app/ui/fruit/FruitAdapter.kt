@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.mopr.fruits_app.R
 import com.mopr.fruits_app.data.model.Fruit
+import java.util.Locale
 
 class FruitAdapter (
     private val context: Context,
@@ -26,10 +27,12 @@ class FruitAdapter (
 
         val imageView = view.findViewById<ImageView>(R.id.gridImage)
         val textView = view.findViewById<TextView>(R.id.gridText)
+        val priceView = view.findViewById<TextView>(R.id.gridPrice)
 
         val fruit = fruitList[position]
         imageView.setImageResource(fruit.imageRes)
         textView.text = fruit.name
+        priceView.text = String.format(Locale.getDefault(), "$%.2f", fruit.price)
 
         return view
     }
