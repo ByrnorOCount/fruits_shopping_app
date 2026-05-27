@@ -3,23 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="#AAFFFFFF"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/leaf_green_top"
+    app:strokeWidth="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/ivCartItem"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:contentDescription="@string/fruit_image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_fruit_apple" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/ivCartItem"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/fruit_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_fruit_apple" />
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -33,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fruit_name"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -42,14 +54,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/price_placeholder"
-                android:textColor="@color/leaf_green_top" />
+                android:textColor="@color/leaf_green_top"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="#33FFFFFF"
+                android:paddingHorizontal="4dp">
 
                 <ImageButton
                     android:id="@+id/btnMinus"
@@ -66,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/quantity_placeholder"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 

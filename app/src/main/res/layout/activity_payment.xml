@@ -52,7 +52,9 @@
                 android:text="@string/payment_credit_card"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:useMaterialThemeColors="false"
+                app:buttonTint="@color/radio_tint" />
 
             <RadioButton
                 android:id="@+id/rbPaypal"
@@ -62,7 +64,9 @@
                 android:text="@string/payment_paypal"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:useMaterialThemeColors="false"
+                app:buttonTint="@color/radio_tint" />
 
             <RadioButton
                 android:id="@+id/rbCash"
@@ -72,7 +76,9 @@
                 android:text="@string/payment_cash"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:useMaterialThemeColors="false"
+                app:buttonTint="@color/radio_tint" />
 
         </RadioGroup>
     </com.google.android.material.card.MaterialCardView>

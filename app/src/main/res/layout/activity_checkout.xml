@@ -233,6 +233,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
+                            android:textColorHint="@color/leaf_green_top"
                             app:boxStrokeColor="@color/leaf_green_top"
                             app:hintTextColor="@color/leaf_green_top">
 

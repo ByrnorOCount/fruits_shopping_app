@@ -17,6 +17,7 @@
         <item name="colorOnSurfaceVariant">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/bark_brown_secondary</item>
+        <item name="colorControlNormal">@color/black</item>
 
         <!-- Dialog Styling -->
         <item name="alertDialogTheme">@style/CustomAlertDialog</item>

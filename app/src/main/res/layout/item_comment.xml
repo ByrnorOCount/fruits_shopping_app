@@ -32,7 +32,8 @@
             android:layout_marginTop="4dp"
             android:isIndicator="true"
             android:numStars="5"
-            android:progressTint="@color/bold_yellow_card" />
+            android:progressTint="@color/bold_yellow_card"
+            android:progressBackgroundTint="@color/black" />
 
         <TextView
             android:id="@+id/tvCommentText"

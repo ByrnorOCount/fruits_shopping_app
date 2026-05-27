@@ -287,7 +287,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/add_review_hint"
-                                app:boxStrokeColor="@color/leaf_green_top">
+                                android:textColorHint="@color/leaf_green_top"
+                                app:boxStrokeColor="@color/leaf_green_top"
+                                app:hintTextColor="@color/leaf_green_top">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/editComment"
@@ -305,7 +307,9 @@
                                 android:numStars="5"
                                 android:stepSize="1"
                                 style="?android:attr/ratingBarStyleIndicator"
-                                android:isIndicator="false" />
+                                android:isIndicator="false"
+                                android:progressTint="@color/bold_yellow_card"
+                                android:progressBackgroundTint="@color/black" />
 
                             <Button
                                 android:id="@+id/btnSubmitComment"
